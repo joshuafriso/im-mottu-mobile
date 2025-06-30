@@ -13,6 +13,7 @@ class AppTheme {
         selectionHandleColor: AppColors.primary,
       ),
       primaryColor: AppColors.primary,
+      scaffoldBackgroundColor: AppColors.grayLight,
       textTheme: TextTheme(
         displayLarge: AppTypography.headLine1,
         displayMedium: AppTypography.headLine2,

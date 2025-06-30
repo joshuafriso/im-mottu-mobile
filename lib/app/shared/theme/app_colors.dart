@@ -25,4 +25,47 @@ class AppColors {
   static const grayMedium = Color(0xFF666666);
   static const grayLight = Color(0xFFE0E0E0);
   static const white = Color(0xFFFFFFFF);
+
+  Color colorType(String? type) {
+    switch (type) {
+      case "Normal":
+        return normalPokemon;
+      case "Fire":
+        return firePokemon;
+      case "Water":
+        return waterPokemon;
+      case "Electric":
+        return eletricPokemon;
+      case "Grass":
+        return grassPokemon;
+      case "Ice":
+        return icePokemon;
+      case "Fighting":
+        return fightingPokemon;
+      case "Poison":
+        return poisonPokemon;
+      case "Ground":
+        return groundPokemon;
+      case "Flying":
+        return flyingPokemon;
+      case "Psychic":
+        return psychicPokemon;
+      case "Bug":
+        return bugPokemon;
+      case "Rock":
+        return rockPokemon;
+      case "Ghost":
+        return ghostPokemon;
+      case "Dragon":
+        return dragonPokemon;
+      case "Dark":
+        return darkPokemon;
+      case "Steel":
+        return steelPokemon;
+      case "Fairy":
+        return fairyPokemon;
+      default:
+        return normalPokemon;
+    }
+  }
 }

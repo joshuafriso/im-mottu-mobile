@@ -4,9 +4,11 @@ import 'package:get/get.dart';
 import 'package:im_mottu_mobile/app/config/app_pages_routes.dart';
 import 'package:im_mottu_mobile/app/config/endpoints.dart';
 import 'package:im_mottu_mobile/app/shared/interfaces/i_pokemon_service.dart';
+import 'package:im_mottu_mobile/app/shared/models/pokemon_abilities_model.dart';
 import 'package:im_mottu_mobile/app/shared/models/pokemon_details_model.dart';
 import 'package:im_mottu_mobile/app/shared/models/pokemon_model.dart';
 import 'package:im_mottu_mobile/app/shared/models/pokemon_type_model.dart';
+import 'package:im_mottu_mobile/app/shared/utils/app_texts.dart';
 
 class HomeController extends GetxController {
   final IPokemonService pokemonService;
@@ -30,7 +32,7 @@ class HomeController extends GetxController {
       pokemons = PokemonModel.fromJsonList(body['results']);
       isLoading.value = false;
     } else {
-      loadError.value = 'Erro ao carregar os pokemons';
+      loadError.value = AppTexts.failedLoadPokemons;
     }
   }
 
@@ -45,10 +47,11 @@ class HomeController extends GetxController {
           weight: body['weight'],
           imgUrl: Endpoints.pokemonImgUrl.replaceAll('{id}', body['id'].toString()),
           typesModel: PokemonTypeModel.fromJsonList(body['types']),
+          abilitiesModel: PokemonAbilitiesModel.fromJsonList(body['abilities']),
         ),
       );
     } else {
-      loadError.value = 'Erro ao carregar os detalhes dos pokemons';
+      loadError.value = AppTexts.failedLoadPokemonDetails;
     }
   }
 

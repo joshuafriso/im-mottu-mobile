@@ -5,4 +5,7 @@ class AppTexts {
   static const String aboutText = "About";
   static const String heightText = "Height";
   static const String weightText = "Weight";
+  static const String abilitiesText = "Abilities";
+  static const String failedLoadPokemons = "Failed to load the Pokemons list";
+  static const String failedLoadPokemonDetails = "Failed to load the Pokemon details";
 }

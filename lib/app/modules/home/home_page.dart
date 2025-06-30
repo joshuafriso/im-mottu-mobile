@@ -21,6 +21,8 @@ class HomePage extends GetView<HomeController> {
       body: Obx(() {
         if (controller.isLoading.value) {
           return LoadingDefault();
+        } else if (controller.loadError.value != '') {
+          return Center(child: Text(controller.loadError.value, style: AppTypography.headLine1));
         } else {
           return GridView.builder(
             padding: const EdgeInsets.all(AppSpacing.screenPadding),

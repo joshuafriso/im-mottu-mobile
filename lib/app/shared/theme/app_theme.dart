@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:im_mottu_mobile/app/shared/theme/app_border_radius.dart';
 import 'package:im_mottu_mobile/app/shared/theme/app_colors.dart';
 import 'package:im_mottu_mobile/app/shared/theme/app_typography.dart';
 
@@ -22,10 +23,20 @@ class AppTheme {
         bodySmall: AppTypography.caption,
       ),
       inputDecorationTheme: InputDecorationTheme(
-        labelStyle: AppTypography.textBody2!.copyWith(color: AppColors.primary),
+        labelStyle: AppTypography.textBody2!.copyWith(color: AppColors.white),
         hintStyle: AppTypography.textBody2!.copyWith(color: AppColors.grayMedium),
-        focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.primary)),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(AppBorderRadius.xxl),
+        ),
         focusColor: AppColors.primary,
+        fillColor: AppColors.white,
+        filled: true,
+        suffixIconColor: AppColors.primary,
+        border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(AppBorderRadius.xxl),
+        ),
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: AppColors.primary,

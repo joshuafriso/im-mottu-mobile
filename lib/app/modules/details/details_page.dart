@@ -2,7 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:im_mottu_mobile/app/modules/details/details_controller.dart';
+import 'package:im_mottu_mobile/app/modules/details/widgets/abilities_widget.dart';
 import 'package:im_mottu_mobile/app/modules/details/widgets/height_widget.dart';
+import 'package:im_mottu_mobile/app/modules/details/widgets/type_widget.dart';
 import 'package:im_mottu_mobile/app/modules/details/widgets/weight_widget.dart';
 import 'package:im_mottu_mobile/app/shared/theme/app_assets.dart';
 import 'package:im_mottu_mobile/app/shared/theme/app_colors.dart';
@@ -36,6 +38,7 @@ class DetailsPage extends GetView<DetailsController> {
               height: Responsively.auto(150),
             ),
           ),
+          TypeWidget(types: controller.pokemonModel.details!.typesModel!),
           Align(
             alignment: Alignment.center,
             child: Container(
@@ -56,6 +59,8 @@ class DetailsPage extends GetView<DetailsController> {
                 HeightWidget(height: controller.pokemonModel.details!.height),
                 SizedBox(height: 80, child: VerticalDivider(thickness: 2, color: AppColors.grayMedium)),
                 WeightWidget(weight: controller.pokemonModel.details!.weight),
+                SizedBox(height: 80, child: VerticalDivider(thickness: 2, color: AppColors.grayMedium)),
+                AbilitiesWidget(abilities: controller.pokemonModel.details!.abilitiesModel!),
               ],
             ),
           ),

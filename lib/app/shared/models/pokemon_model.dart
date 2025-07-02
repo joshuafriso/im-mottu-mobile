@@ -12,12 +12,12 @@ class PokemonModel {
     return PokemonModel(name: StringUtils().capitalize(json['name']), url: json['url']);
   }
 
-  static List<PokemonModel>? fromJsonList(List? list) {
-    if (list == null) return null;
+  static List<PokemonModel> fromJsonList(List? list) {
+    if (list == null) return [];
     return list.map<PokemonModel>((item) => PokemonModel.fromJson(item)).toList();
   }
 
-  void setDeatils(PokemonDetailsModel details) {
+  void setDetails(PokemonDetailsModel details) {
     this.details = details;
   }
 }

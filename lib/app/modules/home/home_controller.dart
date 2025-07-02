@@ -1,23 +1,22 @@
-import 'dart:convert';
-
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:im_mottu_mobile/app/config/app_pages_routes.dart';
-import 'package:im_mottu_mobile/app/config/endpoints.dart';
-import 'package:im_mottu_mobile/app/shared/interfaces/i_pokemon_service.dart';
-import 'package:im_mottu_mobile/app/shared/models/pokemon_abilities_model.dart';
-import 'package:im_mottu_mobile/app/shared/models/pokemon_details_model.dart';
 import 'package:im_mottu_mobile/app/shared/models/pokemon_model.dart';
-import 'package:im_mottu_mobile/app/shared/models/pokemon_type_model.dart';
+import 'package:im_mottu_mobile/app/shared/repositories/pokemon_repository.dart';
 import 'package:im_mottu_mobile/app/shared/utils/app_texts.dart';
 
 class HomeController extends GetxController {
-  final IPokemonService pokemonService;
+  final PokemonRepository pokemonRepository;
 
-  HomeController({required this.pokemonService});
+  HomeController({required this.pokemonRepository});
 
-  List<PokemonModel>? pokemons = <PokemonModel>[].obs;
+  RxList<PokemonModel> pokemons = <PokemonModel>[].obs;
+  List<PokemonModel> basePokemonList = <PokemonModel>[];
   var loadError = ''.obs;
   var isLoading = true.obs;
+  TextEditingController searchController = TextEditingController();
+
+  RxSet<int> loadingIndexes = <int>{}.obs;
 
   @override
   void onInit() {
@@ -25,33 +24,47 @@ class HomeController extends GetxController {
     getPokemons();
   }
 
+  @override
+  void onClose() {
+    super.onClose();
+    searchController.dispose();
+  }
+
   Future<void> getPokemons() async {
-    final response = await pokemonService.getPokemonList();
-    if (response.isOk) {
-      var body = jsonDecode(response.bodyString!);
-      pokemons = PokemonModel.fromJsonList(body['results']);
+    try {
+      pokemons.value = await pokemonRepository.getPokemons();
+      basePokemonList = List<PokemonModel>.from(pokemonRepository.cachedList);
       isLoading.value = false;
-    } else {
+    } catch (e) {
       loadError.value = AppTexts.failedLoadPokemons;
+      isLoading.value = false;
     }
   }
 
   Future<void> getPokemonsDetails(int index) async {
-    final response = await pokemonService.getPokemonDetails(pokemons![index].name);
-    if (response.isOk) {
-      final body = response.body;
-      pokemons![index].setDeatils(
-        PokemonDetailsModel(
-          id: body['id'],
-          height: body['height'],
-          weight: body['weight'],
-          imgUrl: Endpoints.pokemonImgUrl.replaceAll('{id}', body['id'].toString()),
-          typesModel: PokemonTypeModel.fromJsonList(body['types']),
-          abilitiesModel: PokemonAbilitiesModel.fromJsonList(body['abilities']),
-        ),
-      );
-    } else {
+    try {
+      if (pokemons[index].details == null) {
+        loadingIndexes.add(index);
+        pokemons[index].details = await pokemonRepository.getPokemonDetails(index);
+        loadingIndexes.remove(index);
+      }
+    } catch (e) {
       loadError.value = AppTexts.failedLoadPokemonDetails;
+    }
+  }
+
+  void filterList(String value) {
+    loadError.value = '';
+    if (value.isEmpty) {
+      pokemons.assignAll(basePokemonList);
+    } else {
+      List<PokemonModel> filteredList = <PokemonModel>[];
+
+      filteredList.addAll(basePokemonList);
+
+      filteredList = filteredList.where((pokemon) => pokemon.name.toLowerCase().contains(value.toLowerCase())).toList();
+
+      pokemons.assignAll(filteredList);
     }
   }
 

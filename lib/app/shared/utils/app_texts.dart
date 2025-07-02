@@ -8,4 +8,5 @@ class AppTexts {
   static const String abilitiesText = "Abilities";
   static const String failedLoadPokemons = "Failed to load the Pokemons list";
   static const String failedLoadPokemonDetails = "Failed to load the Pokemon details";
+  static const String noPokemonsFound = "No Pokemons was founded";
 }

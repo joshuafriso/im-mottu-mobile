@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:im_mottu_mobile/app/shared/theme/app_assets.dart';
+import 'package:im_mottu_mobile/app/shared/utils/responsively.dart';
 import 'package:lottie/lottie.dart';
 
 class LoadingDefault extends StatelessWidget {
@@ -7,6 +8,12 @@ class LoadingDefault extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: LottieBuilder.asset(AppAssets.pokeballLoading));
+    return Center(
+      child: SizedBox(
+        height: Responsively.auto(150),
+        width: Responsively.auto(150),
+        child: LottieBuilder.asset(AppAssets.pokeballLoading),
+      ),
+    );
   }
 }

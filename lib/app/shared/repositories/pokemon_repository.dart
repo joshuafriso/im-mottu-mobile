@@ -37,4 +37,30 @@ class PokemonRepository {
     }
     return details;
   }
+
+  Future<List<PokemonModel>> getPokemonsByType(String type) async {
+    List<PokemonModel> resultList = [];
+    final response = await service.getPokemonByType(type);
+    if (response.isOk) {
+      var body = jsonDecode(response.bodyString!);
+      var list = body['pokemon'];
+      for (var item in list) {
+        resultList.add(PokemonModel.fromJson(item['pokemon']));
+      }
+    }
+    return resultList;
+  }
+
+  Future<List<PokemonModel>> getPokemonsByAbility(String ability) async {
+    List<PokemonModel> resultList = [];
+    final response = await service.getPokemonsByAbility(ability);
+    if (response.isOk) {
+      var body = jsonDecode(response.bodyString!);
+      var list = body['pokemon'];
+      for (var item in list) {
+        resultList.add(PokemonModel.fromJson(item['pokemon']));
+      }
+    }
+    return resultList;
+  }
 }

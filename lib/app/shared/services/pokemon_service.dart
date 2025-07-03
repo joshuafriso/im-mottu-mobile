@@ -14,4 +14,16 @@ class PokemonService extends IPokemonService {
     final response = await get(Endpoints.pokemonDetails.replaceAll("{name}", name));
     return response;
   }
+
+  @override
+  Future<Response> getPokemonByType(String type) async {
+    final response = await get(Endpoints.pokemonType.replaceAll("{name}", type));
+    return response;
+  }
+
+  @override
+  Future<Response> getPokemonsByAbility(String ability) async {
+    final response = await get(Endpoints.pokemonAbility.replaceAll("{name}", ability));
+    return response;
+  }
 }

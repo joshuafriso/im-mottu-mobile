@@ -30,7 +30,11 @@ class DetailsPage extends GetView<DetailsController> {
             height: Responsively.auto(250),
             decoration: BoxDecoration(
               color: AppColors().colorType(controller.pokemonModel.details!.typesModel![0].name),
-              image: DecorationImage(image: AssetImage(AppAssets.pokeballBackground), alignment: Alignment.centerRight),
+              image: DecorationImage(
+                image: AssetImage(AppAssets.pokeball),
+                alignment: Alignment.centerRight,
+                opacity: 0.32,
+              ),
             ),
             child: CachedNetworkImage(
               imageUrl: controller.pokemonModel.details!.imgUrl,

@@ -12,7 +12,7 @@ class AppWidget extends StatelessWidget {
     return GetMaterialApp(
       theme: AppTheme.appTheme,
       navigatorKey: Get.key,
-      initialRoute: AppPagesRoutes.home,
+      initialRoute: AppPagesRoutes.splash,
       getPages: AppRoutes.routes,
     );
   }

@@ -27,6 +27,7 @@ class HomePage extends GetView<HomeController> {
               controller: controller.searchController,
               onChanged: (value) => controller.filterList(value),
               decoration: InputDecoration(hintText: "Search", suffixIcon: Icon(Icons.search)),
+              onTapOutside: (event) => FocusScope.of(context).unfocus(),
             ),
           ),
         ),
@@ -34,7 +35,7 @@ class HomePage extends GetView<HomeController> {
 
       body: Obx(() {
         if (controller.isLoading.value) {
-          return LoadingDefault();
+          return LoadingDefault(color: AppColors.primary);
         } else if (controller.loadError.value != '') {
           return Align(
             alignment: Alignment.center,
@@ -48,10 +49,11 @@ class HomePage extends GetView<HomeController> {
               : GridView.builder(
                   padding: const EdgeInsets.all(AppSpacing.screenPadding),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisExtent: 140),
+                  controller: controller.scrollController,
                   itemCount: controller.pokemons.length,
                   itemBuilder: (context, index) {
                     return FutureBuilder(
-                      future: controller.getPokemonsDetails(index),
+                      future: controller.getPokemonsDetails(controller.pokemons[index].name, index),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
                           return ListTile(
@@ -65,13 +67,17 @@ class HomePage extends GetView<HomeController> {
                               child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(AppColors.primary)),
                             ),
                           );
-                        } else {
+                        } else if (snapshot.connectionState == ConnectionState.done) {
                           return controller.pokemons.isNotEmpty
                               ? GestureDetector(
                                   onTap: () {
                                     controller.goToDetails(controller.pokemons[index]);
                                   },
-                                  child: PokemonCard(pokemonModel: controller.pokemons[index]),
+                                  child: PokemonCard(
+                                    name: controller.pokemons[index].name,
+                                    type: controller.pokemons[index].details!.typesModel![0].name,
+                                    image: controller.pokemons[index].details!.imgUrl,
+                                  ),
                                 )
                               : Card(
                                   child: Padding(
@@ -82,6 +88,13 @@ class HomePage extends GetView<HomeController> {
                                     ),
                                   ),
                                 );
+                        } else {
+                          return ListTile(
+                            title: Text(
+                              controller.pokemons[index].name,
+                              style: AppTypography.subtitle1!.copyWith(color: AppColors.grayDark),
+                            ),
+                          );
                         }
                       },
                     );

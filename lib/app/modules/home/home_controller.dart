@@ -18,7 +18,14 @@ class HomeController extends GetxController {
 
   RxSet<int> loadingIndexes = <int>{}.obs;
   final ScrollController scrollController = ScrollController();
-  var _offset = 0.obs;
+
+  final _offset = 0.obs;
+
+  int get offset => _offset.value;
+
+  set offset(int value) => _offset.value = value;
+
+  void incrementOffset() => _offset.value += 50;
 
   @override
   void onInit() {
@@ -28,7 +35,7 @@ class HomeController extends GetxController {
       bool isAtBottom = scrollController.position.pixels > scrollController.position.maxScrollExtent;
 
       if (isAtBottom) {
-        _offset += 50;
+        incrementOffset();
         getPokemons();
       }
     });
@@ -38,6 +45,7 @@ class HomeController extends GetxController {
   void onClose() {
     super.onClose();
     searchController.dispose();
+    scrollController.dispose();
   }
 
   Future<void> getPokemons() async {

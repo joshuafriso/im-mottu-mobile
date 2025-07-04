@@ -1,5 +1,3 @@
-# im_mottu_mobile
-
 # Project Description
 This is a Pokédex app
 
@@ -34,20 +32,20 @@ After all the dependencies were got, press F5 to run the project
 
 ## Implemented Features
 # Level 1
-[X]Show a Pokemon List with name and picture
+[X]Show a Pokemon List with name and picture<br>
 [X]Show a Pokemon Details with name, picture, weight, and height when touch in one of the list
 
 # Level 2
-[X]Store locally in cache the consultations made to the API
-[X]Create a name filter for the listing
+[X]Store locally in cache the consultations made to the API<br>
+[X]Create a name filter for the listing<br>
 [X]On the detail screen, also display: Types and Abilities
 
 # Level 3
-[X]Create a custom splash screen
-[X]Clean the cache when closing the app
-[X]Implement pagination in the listing
-[X]When clicking on a type or skill, display the list of related Pokémon
-[X]Allow navigation for the details of related Pokémon
+[X]Create a custom splash screen<br>
+[X]Clean the cache when closing the app<br>
+[X]Implement pagination in the listing<br>
+[X]When clicking on a type or skill, display the list of related Pokémon<br>
+[X]Allow navigation for the details of related Pokémon<br>
 [X]Create unit tests for business rules
 
 ## Architecture

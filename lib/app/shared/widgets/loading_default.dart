@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:im_mottu_mobile/app/shared/theme/app_assets.dart';
+import 'package:im_mottu_mobile/app/shared/theme/app_colors.dart';
 import 'package:im_mottu_mobile/app/shared/utils/responsively.dart';
-import 'package:lottie/lottie.dart';
 
 class LoadingDefault extends StatelessWidget {
-  const LoadingDefault({super.key});
+  final Color? color;
+  const LoadingDefault({super.key, this.color = AppColors.primary});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class LoadingDefault extends StatelessWidget {
       child: SizedBox(
         height: Responsively.auto(150),
         width: Responsively.auto(150),
-        child: LottieBuilder.asset(AppAssets.pokeballLoading),
+        child: Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(color))),
       ),
     );
   }

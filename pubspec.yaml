@@ -24,11 +24,11 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "ic_launcher"
   adaptive_icon_foreground: "assets/icons/icon.png"
-  adaptive_icon_background: "#e3e6f8"
+  adaptive_icon_background: "#000000"
   ios: true
   image_path: "assets/icons/icon.png"
   remove_alpha_ios: true
-  background_color_ios: "#e3e6f8"
+  background_color_ios: "#000000"
   min_sdk_android: 21
   adaptive_icon_foreground_inset: 22
 
@@ -38,4 +38,3 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
-    - assets/lottie/

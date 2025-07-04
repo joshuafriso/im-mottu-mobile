@@ -17,22 +17,41 @@ class HomeController extends GetxController {
   TextEditingController searchController = TextEditingController();
 
   RxSet<int> loadingIndexes = <int>{}.obs;
+  final ScrollController scrollController = ScrollController();
+
+  final _offset = 0.obs;
+
+  int get offset => _offset.value;
+
+  set offset(int value) => _offset.value = value;
+
+  void incrementOffset() => _offset.value += 50;
 
   @override
   void onInit() {
     super.onInit();
     getPokemons();
+    scrollController.addListener(() {
+      bool isAtBottom = scrollController.position.pixels > scrollController.position.maxScrollExtent;
+
+      if (isAtBottom) {
+        incrementOffset();
+        getPokemons();
+      }
+    });
   }
 
   @override
   void onClose() {
     super.onClose();
     searchController.dispose();
+    scrollController.dispose();
   }
 
   Future<void> getPokemons() async {
     try {
-      pokemons.value = await pokemonRepository.getPokemons();
+      final pokemonResult = await pokemonRepository.getPokemons();
+      pokemons.value = pokemonResult.sublist(_offset.value, _offset.value + 50);
       basePokemonList = List<PokemonModel>.from(pokemonRepository.cachedList);
       isLoading.value = false;
     } catch (e) {
@@ -41,11 +60,12 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> getPokemonsDetails(int index) async {
+  Future<void> getPokemonsDetails(String name, int index) async {
     try {
+      final indexPokemon = basePokemonList.indexWhere((element) => element.name == name);
       if (pokemons[index].details == null) {
         loadingIndexes.add(index);
-        pokemons[index].details = await pokemonRepository.getPokemonDetails(index);
+        pokemons[index].details = await pokemonRepository.getPokemonDetails(indexPokemon);
         loadingIndexes.remove(index);
       }
     } catch (e) {
@@ -55,8 +75,10 @@ class HomeController extends GetxController {
 
   void filterList(String value) {
     loadError.value = '';
+    isLoading.value = true;
     if (value.isEmpty) {
       pokemons.assignAll(basePokemonList);
+      isLoading.value = false;
     } else {
       List<PokemonModel> filteredList = <PokemonModel>[];
 
@@ -65,6 +87,7 @@ class HomeController extends GetxController {
       filteredList = filteredList.where((pokemon) => pokemon.name.toLowerCase().contains(value.toLowerCase())).toList();
 
       pokemons.assignAll(filteredList);
+      isLoading.value = false;
     }
   }
 

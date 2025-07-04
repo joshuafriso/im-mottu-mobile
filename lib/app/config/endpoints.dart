@@ -5,4 +5,6 @@ class Endpoints {
   static const String pokemonDetails = "/pokemon/{name}";
   static const String pokemonImgUrl =
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{id}.png";
+  static const String pokemonType = "/type/{name}";
+  static const String pokemonAbility = "/ability/{name}";
 }
